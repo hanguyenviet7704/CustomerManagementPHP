@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Nổi Bật - Tin Khách Hàng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .top-bar {
+            background-color: #0d6efd;
+            color: white;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .breaking-news {
+            background-color: #dc3545;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .page-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .headline {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .headline img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        
+        .headline-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            color: white;
+        }
+        
+        .headline-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+            color: #0d6efd;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background-color: #0d6efd;
+        }
+        
+        .news-card {
+            border: none;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+            height: 100%;
+            margin-bottom: 1.5rem;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .news-card .card-body {
+            padding: 1.5rem;
+        }
+        
+        .news-card .card-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        
+        .news-card .card-text {
+            color: #6c757d;
+        }
+        
+        .category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category.business {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .category.tech {
+            background-color: #6610f2;
+            color: white;
+        }
+        
+        .category.finance {
+            background-color: #198754;
+            color: white;
+        }
+        
+        .category.retail {
+            background-color: #fd7e14;
+            color: white;
+        }
+        
+        .footer {
+            background-color: #212529;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer ul li a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #343a40;
+            color: white;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: #0d6efd;
+        }
+        
+        .copyright {
+            background-color: #1a1e21;
+            color: #adb5bd;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-meta {
+            margin-bottom: 2rem;
+            color: #6c757d;
+        }
+        
+        .article-meta span {
+            margin-right: 1rem;
+        }
+        
+        .article-image {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-image img {
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+        
+        .article-image figcaption {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .related-news {
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="breaking-news">Mới nhất</span>
+                    <span>Tập đoàn ABC vừa ký kết hợp đồng trị giá 10 tỷ đồng</span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span><i class="fas fa-calendar-alt me-1"></i> Thứ Hai, 12/05/2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="trang-chu.html">
+                <i class="fas fa-newspaper me-2 text-primary"></i>
+                Tin Khách Hàng
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="trang-chu.html">
+                            <i class="fas fa-home me-2"></i>Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tin-noi-bat.html">
+                            <i class="fas fa-star me-2"></i>Tin nổi bật
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="thong-ke.html">
+                            <i class="fas fa-chart-bar me-2"></i>Thống kê
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-hang-noi-bat.html">
+                            <i class="fas fa-user-check me-2"></i>Khách hàng nổi bật
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-hang-tiem-nang.html">
+                            <i class="fas fa-user-clock me-2"></i>Khách hàng tiềm năng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quan-ly-khach-hang.html">
+                            <i class="fas fa-users-cog me-2"></i>Quản lý khách hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="danh-gia.html">
+                            <i class="fas fa-comments me-2"></i>Đánh giá
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Tin Nổi Bật</h1>
+            <p class="lead">Cập nhật những thông tin mới nhất về đối tác chiến lược và khách hàng quan trọng</p>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container py-4">
+        <!-- Featured Article -->
+        <article class="mb-5">
+            <h2 class="mb-3">Tập đoàn SamSung trở thành đối tác chiến lược của chúng tôi</h2>
+            <div class="article-meta">
+                <span><i class="fas fa-user me-1"></i> Nguyễn Văn A</span>
+                <span><i class="fas fa-calendar-alt me-1"></i> 10/05/2025</span>
+                <span><i class="fas fa-tag me-1"></i> Doanh nghiệp</span>
+            </div>
+            <figure class="article-image">
+                <img src="https://hovo.vn/wp-content/uploads/2023/01/chup-hinh-ky-ket-hop-dong-hovo-vn-14.jpeg" alt="Tập đoàn XYZ">
+                <figcaption>Lễ ký kết hợp tác chiến lược giữa hai bên</figcaption>
+            </figure>
+            <div class="article-content">
+                <p>Hôm nay, chúng tôi vui mừng thông báo về việc ký kết hợp tác chiến lược với Tập đoàn XYZ - một trong những doanh nghiệp hàng đầu trong lĩnh vực công nghệ tại Việt Nam. Hợp đồng hợp tác kéo dài 5 năm này đánh dấu một bước tiến quan trọng trong chiến lược phát triển của cả hai bên.</p>
+                
+                <p>Theo thỏa thuận, chúng tôi sẽ cung cấp các giải pháp công nghệ toàn diện cho Tập đoàn XYZ, bao gồm hệ thống quản lý khách hàng, phân tích dữ liệu và tự động hóa quy trình kinh doanh. Đổi lại, Tập đoàn XYZ sẽ trở thành đối tác phân phối chính thức của chúng tôi tại thị trường miền Nam.</p>
+                
+                <p>Ông Nguyễn Văn X, Tổng Giám đốc Tập đoàn XYZ, chia sẻ: "Chúng tôi rất vui mừng về hợp tác chiến lược này. Với kinh nghiệm và chuyên môn của đối tác, chúng tôi tin rằng sẽ nâng cao hiệu quả hoạt động và tạo ra giá trị lớn hơn cho khách hàng của mình."</p>
+                
+                <p>Bà Trần Thị Y, Giám đốc Điều hành của chúng tôi, nhấn mạnh: "Hợp tác này không chỉ mang lại lợi ích kinh tế mà còn tạo cơ hội để hai bên cùng phát triển các giải pháp sáng tạo, đáp ứng nhu cầu ngày càng cao của thị trường."</p>
+                
+                <p>Dự kiến, giai đoạn đầu tiên của hợp tác sẽ tập trung vào việc triển khai hệ thống quản lý khách hàng tích hợp cho Tập đoàn XYZ. Giai đoạn tiếp theo sẽ mở rộng sang các lĩnh vực như phân tích dữ liệu lớn và trí tuệ nhân tạo.</p>
+                
+                <p>Đây là hợp đồng lớn thứ ba mà chúng tôi ký kết trong năm 2025, khẳng định vị thế ngày càng vững mạnh trên thị trường công nghệ Việt Nam.</p>
+            </div>
+        </article>
+        
+        <!-- Other Featured News -->
+        <section class="related-news">
+            <h3 class="section-title">Tin nổi bật khác</h3>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card news-card">
+                        <img src="https://media.vov.vn/sites/default/files/styles/large/public/2020-08/3958_viettel.jpg" class="card-img-top" alt="News">
+                        <div class="card-body">
+                            <span class="category tech">Công nghệ</span>
+                            <h4 class="card-title">Công ty Viettel triển khai giải pháp mới</h4>
+                            <p class="card-text">Công ty Viettel, đối tác lâu năm của chúng tôi, vừa hoàn tất việc triển khai giải pháp công nghệ mới do chúng tôi cung cấp.</p>
+                            <a href="#" class="btn btn-outline-primary mt-3">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card news-card">
+                        <img src="https://img.giaoduc.net.vn/w1000/Uploaded/2025/abhusbj/2016_08_25/Agribank_1.jpg" class="card-img-top" alt="News">
+                        <div class="card-body">
+                            <span class="category finance">Tài chính</span>
+                            <h4 class="card-title">Ngân hàng Agribank mở rộng chi nhánh</h4>
+                            <p class="card-text">Ngân hàng Agribank, với sự hỗ trợ từ các giải pháp của chúng tôi, đã khai trương thêm 5 chi nhánh mới tại các tỉnh thành trọng điểm.</p>
+                            <a href="#" class="btn btn-outline-primary mt-3">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card news-card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0gXKdX_B06cTLY7_8ejtDsgnd5356BP0nWA&s" class="card-img-top" alt="News">
+                        <div class="card-body">
+                            <span class="category retail">Bán lẻ</span>
+                            <h4 class="card-title">Chuỗi cửa hàng Vit34 đạt doanh thu kỷ lục</h4>
+                            <p class="card-text">Sau khi áp dụng giải pháp quản lý bán hàng của chúng tôi, chuỗi cửa hàng Vit34 đã ghi nhận mức tăng trưởng doanh thu 28%.</p>
+                            <a href="#" class="btn btn-outline-primary mt-3">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary">Xem thêm tin tức</a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Về chúng tôi</h5>
+                    <p>Tin Khách Hàng là trang thông tin chuyên cung cấp tin tức, phân tích và đánh giá về khách hàng trong các lĩnh vực kinh doanh.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5>Danh mục</h5>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="tin-noi-bat.html">Tin nổi bật</a></li>
+                        <li><a href="thong-ke.html">Thống kê</a></li>
+                        <li><a href="khach-hang-noi-bat.html">Khách hàng nổi bật</a></li>
+                        <li><a href="khach-hang-tiem-nang.html">Khách hàng tiềm năng</a></li>
+                        <li><a href="danh-gia.html">Đánh giá</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5>Liên kết</h5>
+                    <ul>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Quảng cáo</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5>Liên hệ</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Quận 1, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i> (028) 1234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@tinkhachhang.vn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright">
+        <div class="container">
+            <p class="mb-0">© 2025 Tin Khách Hàng. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khách Hàng Tiềm Năng - Tin Khách Hàng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6610f2;
+            --success-color: #198754;
+            --info-color: #0dcaf0;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+        
+        .top-bar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .breaking-news {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--warning-color), #fd7e14);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://anhdephd.vn/wp-content/uploads/2022/04/hinh-nen-thanh-pho-hong-kong-chieu-toi-4k-ultra-hd.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .page-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-bottom: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            border-bottom: 3px solid #dee2e6;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .potential-customer {
+            background-color: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .potential-customer:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .potential-customer .image {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .potential-customer .image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        }
+        
+        .potential-customer .image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .potential-customer:hover .image img {
+            transform: scale(1.1);
+        }
+        
+        .potential-customer .content {
+            padding: 2rem;
+        }
+        
+        .potential-customer .title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .potential-customer .meta {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .potential-customer .description {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+        
+        .potential-customer .progress-container {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--light-color), #fff);
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .potential-customer .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .potential-customer .progress {
+            height: 0.8rem;
+            border-radius: 1rem;
+            background-color: #e9ecef;
+        }
+        
+        .potential-customer .progress-bar {
+            border-radius: 1rem;
+            transition: width 0.6s ease;
+        }
+        
+        .category {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .category.business {
+            background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+            color: white;
+        }
+        
+        .category.tech {
+            background: linear-gradient(135deg, var(--secondary-color), #520dc2);
+            color: white;
+        }
+        
+        .category.finance {
+            background: linear-gradient(135deg, var(--success-color), #146c43);
+            color: white;
+        }
+        
+        .category.retail {
+            background: linear-gradient(135deg, var(--warning-color), #cc9a06);
+            color: white;
+        }
+        
+        .potential-card {
+            background-color: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .potential-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .potential-card .card-body {
+            padding: 2rem;
+        }
+        
+        .potential-card .company-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .potential-card:hover .company-logo {
+            transform: scale(1.05);
+        }
+        
+        .potential-card .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .potential-card .card-text {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .badge-high {
+            background: linear-gradient(135deg, var(--success-color), #146c43);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .badge-medium {
+            background: linear-gradient(135deg, var(--warning-color), #cc9a06);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .badge-low {
+            background: linear-gradient(135deg, var(--danger-color), #b02a37);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(13, 110, 253, 0.2);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, var(--dark-color), #1a1e21);
+            color: white;
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+        
+        .footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 0.25rem 0;
+        }
+        
+        .footer ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            background-color: #1a1e21;
+            color: #adb5bd;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="breaking-news">Mới nhất</span>
+                    <span>Tập đoàn ABC vừa ký kết hợp đồng trị giá 10 tỷ đồng</span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span><i class="fas fa-calendar-alt me-1"></i> Thứ Hai, 12/05/2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="trang-chu.html">
+                <i class="fas fa-newspaper me-2 text-primary"></i>
+                Tin Khách Hàng
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="trang-chu.html">
+                            <i class="fas fa-home me-2"></i>Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tin-noi-bat.html">
+                            <i class="fas fa-star me-2"></i>Tin nổi bật
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="thong-ke.html">
+                            <i class="fas fa-chart-bar me-2"></i>Thống kê
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-hang-noi-bat.html">
+                            <i class="fas fa-user-check me-2"></i>Khách hàng nổi bật
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="khach-hang-tiem-nang.html">
+                            <i class="fas fa-user-clock me-2"></i>Khách hàng tiềm năng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quan-ly-khach-hang.html">
+                            <i class="fas fa-users-cog me-2"></i>Quản lý khách hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="danh-gia.html">
+                            <i class="fas fa-comments me-2"></i>Đánh giá
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Khách Hàng Tiềm Năng</h1>
+            <p class="lead">Khám phá và theo dõi các khách hàng tiềm năng có thể trở thành đối tác trong tương lai</p>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container py-4">
+     
+        <!-- Top Potential Customers -->
+        <section class="mb-5">
+            <h2 class="section-title">Khách hàng tiềm năng hàng đầu</h2>
+            
+            <!-- Potential Customer 1 -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="potential-customer">
+                        <div class="image">
+                            <img src="https://i.pinimg.com/736x/e9/ba/cf/e9bacf14768bc4ce2dbc57b003cf10ef.jpg" alt="Khách hàng tiềm năng 1">
+                        </div>
+                        <div class="content">
+                            <span class="category finance">Tài chính</span>
+                            <h3 class="title">Ngân hàng ABC</h3>
+                            <div class="meta">
+                                <i class="fas fa-map-marker-alt"></i> Hà Nội
+                                <i class="fas fa-building ms-3"></i> 100+ chi nhánh
+                            </div>
+                            <p class="description">Ngân hàng thương mại cổ phần với tiềm năng phát triển mạnh trong lĩnh vực số hóa.</p>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Tiềm năng</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="potential-customer">
+                        <div class="image">
+                            <img src="https://studiochupanhdep.com/Upload/Images/Album/anh-the-nu.jpg" alt="Khách hàng tiềm năng 2">
+                        </div>
+                        <div class="content">
+                            <span class="category retail">Bán lẻ</span>
+                            <h3 class="title">Chuỗi siêu thị XYZ</h3>
+                            <div class="meta">
+                                <i class="fas fa-map-marker-alt"></i> TP.HCM
+                                <i class="fas fa-store ms-3"></i> 50+ cửa hàng
+                            </div>
+                            <p class="description">Chuỗi siêu thị đang mở rộng và cần giải pháp quản lý khách hàng hiện đại.</p>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Tiềm năng</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="potential-customer">
+                        <div class="image">
+                            <img src="https://studiochupanhdep.com/Upload/Images/Album/anh-the-2024.jpg" alt="Khách hàng tiềm năng 3">
+                        </div>
+                        <div class="content">
+                            <span class="category tech">Công nghệ</span>
+                            <h3 class="title">Startup DEF</h3>
+                            <div class="meta">
+                                <i class="fas fa-map-marker-alt"></i> Đà Nẵng
+                                <i class="fas fa-rocket ms-3"></i> Series A
+                            </div>
+                            <p class="description">Startup công nghệ đang tăng trưởng nhanh và cần giải pháp quản lý khách hàng.</p>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Tiềm năng</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Other Potential Customers -->
+        <section class="mb-5">
+            <h2 class="section-title">Khách hàng tiềm năng khác</h2>
+            <div class="row">
+          
+         
+               
+          
+               
+            
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary">Xem thêm khách hàng tiềm năng</a>
+            </div>
+        </section>
+        
+        <!-- Upcoming Events -->
+        <section class="mb-5">
+            <h2 class="section-title">Sự kiện sắp tới</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="event-date">
+                                    <div class="day">20</div>
+                                    <div class="month">Tháng 5</div>
+                                </div>
+                                <div>
+                                    <h4 class="mb-2">Hội nghị Doanh nghiệp 2025</h4>
+                                    <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-1"></i> Trung tâm Hội nghị Quốc gia, Hà Nội</p>
+                                    <p class="text-muted mb-3"><i class="fas fa-clock me-1"></i> 08:00 - 17:00</p>
+                                    <p>Hội nghị quy tụ các doanh nghiệp hàng đầu trong nhiều lĩnh vực. Đây là cơ hội tốt để kết nối với các khách hàng tiềm năng.</p>
+                                    <a href="#" class="btn btn-outline-primary">Đăng ký tham dự</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="event-date">
+                                    <div class="day">05</div>
+                                    <div class="month">Tháng 6</div>
+                                </div>
+                                <div>
+                                    <h4 class="mb-2">Triển lãm Công nghệ Tài chính</h4>
+                                    <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-1"></i> Trung tâm Triển lãm, TP.HCM</p>
+                                    <p class="text-muted mb-3"><i class="fas fa-clock me-1"></i> 09:00 - 18:00</p>
+                                    <p>Triển lãm giới thiệu các giải pháp công nghệ tài chính mới nhất. Chúng ta sẽ có gian hàng để giới thiệu sản phẩm.</p>
+                                    <a href="#" class="btn btn-outline-primary">Đăng ký tham dự</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="event-date">
+                                    <div class="day">15</div>
+                                    <div class="month">Tháng 6</div>
+                                </div>
+                                <div>
+                                    <h4 class="mb-2">Hội thảo Chuyển đổi số</h4>
+                                    <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-1"></i> Khách sạn Metropole, Hà Nội</p>
+                                    <p class="text-muted mb-3"><i class="fas fa-clock me-1"></i> 13:30 - 17:00</p>
+                                    <p>Hội thảo chia sẻ kinh nghiệm và giải pháp chuyển đổi số cho doanh nghiệp. Chúng ta sẽ có bài thuyết trình về giải pháp của mình.</p>
+                                    <a href="#" class="btn btn-outline-primary">Đăng ký tham dự</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="event-date">
+                                    <div class="day">28</div>
+                                    <div class="month">Tháng 6</div>
+                                </div>
+                                <div>
+                                    <h4 class="mb-2">Gặp gỡ Doanh nghiệp Startup</h4>
+                                    <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-1"></i> Không gian Sáng tạo, TP.HCM</p>
+                                    <p class="text-muted mb-3"><i class="fas fa-clock me-1"></i> 14:00 - 18:00</p>
+                                    <p>Sự kiện kết nối các startup với các nhà đầu tư và đối tác. Đây là cơ hội tốt để tiếp cận các khách hàng tiềm năng trong lĩnh vực công nghệ.</p>
+                                    <a href="#" class="btn btn-outline-primary">Đăng ký tham dự</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lead Generation Form -->
+        <section class="py-5 bg-light rounded">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h3 class="mb-4">Bạn biết một khách hàng tiềm năng?</h3>
+                        <p class="mb-4">Chia sẻ thông tin về khách hàng tiềm năng mà bạn biết. Chúng tôi sẽ liên hệ và tìm hiểu cơ hội hợp tác.</p>
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Tên công ty">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Ngành nghề">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Người liên hệ">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="Email liên hệ">
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="3" placeholder="Thông tin thêm về khách hàng tiềm năng"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Gửi thông tin</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Về chúng tôi</h5>
+                    <p>Tin Khách Hàng là trang thông tin chuyên cung cấp tin tức, phân tích và đánh giá về khách hàng trong các lĩnh vực kinh doanh.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5>Danh mục</h5>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="tin-noi-bat.html">Tin nổi bật</a></li>
+                        <li><a href="thong-ke.html">Thống kê</a></li>
+                        <li><a href="khach-hang-noi-bat.html">Khách hàng nổi bật</a></li>
+                        <li><a href="khach-hang-tiem-nang.html">Khách hàng tiềm năng</a></li>
+                        <li><a href="danh-gia.html">Đánh giá</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5>Liên kết</h5>
+                    <ul>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Quảng cáo</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5>Liên hệ</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Quận 1, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i> (028) 1234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@tinkhachhang.vn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright">
+        <div class="container">
+            <p class="mb-0">© 2025 Tin Khách Hàng. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        // Cấu hình toastr
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        // Hiển thị loading
+        function showLoading() {
+            $('#loadingOverlay').show();
+        }
+        
+        // Ẩn loading
+        function hideLoading() {
+            $('#loadingOverlay').hide();
+        }
+
+        // Lấy thông tin khách hàng theo ID
+        function getCustomerDetails(customerId) {
+            showLoading();
+            return $.ajax({
+                url: `http://localhost/vlluon/api/customers.php`,
+                type: 'GET',
+                data: { id: customerId },
+                dataType: 'json'
+            });
+        }
+
+        // Hiển thị khách hàng tiềm năng
+        function displayPotentialCustomers() {
+            // Danh sách ID khách hàng tiềm năng
+            const potentialCustomerIds = [15, 16, 17, 18, 19, 20, 21, 22,23];
+            
+            // Lấy thông tin từng khách hàng
+            potentialCustomerIds.forEach((id, index) => {
+                getCustomerDetails(id).then(response => {
+                    if (response.status) {
+                        const customer = response.data;
+                        
+                        // Tính toán tiềm năng dựa trên total_spent
+                        const potential = calculatePotential(customer.total_spent);
+                        
+                        // Tạo HTML cho khách hàng
+                        const customerHtml = `
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="potential-card">
+                                    <div class="card-body">
+                                        <img src="${customer.avatar_url || 'https://via.placeholder.com/150'}" 
+                                             class="company-logo" 
+                                             alt="${customer.full_name}">
+                                        <h4 class="card-title">${customer.full_name}</h4>
+                                        <p class="card-text">${customer.company_name || 'Chưa có công ty'}</p>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="badge ${potential.badge} me-2">${potential.label}</span>
+                                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i> ${customer.company_name || 'Chưa có địa chỉ'}</span>
+                                        </div>
+                                        <p class="card-text">${customer.description || 'Chưa có mô tả'}</p>
+                                      
+                                        
+                                        <div class="d-grid">
+                                            <a href="#" class="btn btn-outline-primary">Liên hệ ngay</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Thêm vào container phù hợp
+                        if (index < 3) {
+                            // Thêm vào phần khách hàng tiềm năng hàng đầu
+                            $('.potential-customer').eq(index).find('.content').html(`
+                                <span class="category ${customer.gender === 'Male' ? 'business' : 'tech'}">${customer.gender === 'Male' ? 'Doanh nghiệp' : 'Công nghệ'}</span>
+                                <h3 class="title">${customer.full_name}</h3>
+                                <div class="meta">
+                                    <i class="fas fa-map-marker-alt"></i> ${customer.company_name || 'Chưa có công ty'}
+                                    <i class="fas fa-users ms-3"></i> ${customer.total_spent} VNĐ
+                                </div>
+                                <p class="description">${customer.description || 'Chưa có mô tả'}</p>
+                                <div class="progress-container">
+                                  
+                                    
+                                </div>
+                            `);
+                        } else {
+                            // Thêm vào phần khách hàng tiềm năng khác
+                            $('#otherPotentialCustomers').append(customerHtml);
+                        }
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }).fail(function(xhr, status, error) {
+                    toastr.error('Lỗi khi lấy thông tin khách hàng: ' + error);
+                }).always(function() {
+                    hideLoading();
+                });
+            });
+        }
+
+        // Tính toán tiềm năng dựa trên total_spent
+        function calculatePotential(totalSpent) {
+            const spent = parseFloat(totalSpent.replace(/[^0-9.-]+/g, ''));
+            let potential = {
+                progress: 0,
+                badge: 'badge-low',
+                label: 'Tiềm năng thấp',
+                progressBar: 'bg-danger'
+            };
+
+            if (spent > 10000000) {
+                potential = {
+                    progress: 90,
+                    badge: 'badge-high',
+                    label: 'Tiềm năng cao',
+                    progressBar: 'bg-success'
+                };
+            } else if (spent > 5000000) {
+                potential = {
+                    progress: 75,
+                    badge: 'badge-medium',
+                    label: 'Tiềm năng trung bình',
+                    progressBar: 'bg-warning'
+                };
+            } else if (spent > 1000000) {
+                potential = {
+                    progress: 50,
+                    badge: 'badge-medium',
+                    label: 'Tiềm năng trung bình',
+                    progressBar: 'bg-info'
+                };
+            } else {
+                potential = {
+                    progress: 25,
+                    badge: 'badge-low',
+                    label: 'Tiềm năng thấp',
+                    progressBar: 'bg-danger'
+                };
+            }
+
+            return potential;
+        }
+
+        // Khởi tạo trang
+        $(document).ready(function() {
+            // Thêm container cho khách hàng tiềm năng khác
+            $('.section-title:contains("Khách hàng tiềm năng khác")').after('<div id="otherPotentialCustomers" class="row"></div>');
+            
+            // Hiển thị khách hàng tiềm năng
+            displayPotentialCustomers();
+        });
+    </script>
+</body>
+</html>
